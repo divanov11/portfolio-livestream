@@ -1,0 +1,85 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="hero">
+    <div class="hero--content">
+        <div class="hero--content--intro">
+            <img id="profile_pic" src="{% static 'images/dennis.jpg' %}">
+            <h1 class="intro--name">Dennis <br> Ivanov</h1>
+        </div>
+
+        <div class="hero--content--subheadline">
+
+            <h3 class="description">FullStack Developer</h3>
+            <p class="slogan">I teach people how to code and build cool things</p>
+        </div>
+    </div>
+
+</section>
+
+<section class="container section--2">
+
+    <h3>My Projects</h3>
+    <h5>Projects that makes my journey worthwhile</h5>
+    <div class="projects--wrapper">
+
+        {% for project in projects %}
+        <div class="project--column">
+            <a href="{% url 'project' project.id %}">
+                <img class="project--thumbnail" src="{{project.thumbnail.url}}">
+            </a>
+            <div class="project--body">
+                <h5>{{project.title}}</h5>
+            </div>
+        </div>
+        {% empty %}
+
+        <h3>There are no projects in the database...</h3 {% endfor %} </div>
+
+
+        <div class="about--wrapper">
+            <h3>More About Me</h3>
+
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                and
+                scrambled it to make a type specimen book.</p>
+            <p> It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                containing
+                Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
+                including
+                versions of Lorem Ipsum.</p>
+        </div>
+
+</section>
+
+<section class="section--1">
+    <div class="skills--container">
+        <h3>More About Me</h3>
+
+        {% for skill in detailedSkills %}
+        <div class="skill--wrapper">
+            <h5>{{skill.title}}</h5>
+            <p>{{skill.body}}</p>
+        </div>
+        {% endfor %}
+
+
+        <h4>Other Skills</h4>
+        <div class="other--skills--wrapper">
+            {% for skill in skills %}
+            <div class="skill--tag">
+                <span>{{skill.title}}</span>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+</section>
+
+{% endblock content %}
