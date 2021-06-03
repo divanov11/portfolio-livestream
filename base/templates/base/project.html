@@ -43,7 +43,9 @@
             <div class="card my-3">
                 <div class="card-body">
                     <h5>{{comment.name}}</h5>
-                    <p>{{comment.body}}</p>
+                    <small>{{comment.created|timesince}} ago</small>
+
+                    <p class=" my-3">{{comment.body}}</p>
                 </div>
             </div>
             {% endfor %}
