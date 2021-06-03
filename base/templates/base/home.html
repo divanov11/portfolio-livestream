@@ -82,4 +82,23 @@
 
 </section>
 
+<section class="section--2">
+    <div class="container">
+        <form class="contact--form" method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">{{field.label}}</label>
+                {{field}}
+            </div>
+
+            {% endfor %}
+
+            <input class="btn btn-primary" type="submit" value="submit">
+        </form>
+    </div>
+</section>
+
 {% endblock content %}
