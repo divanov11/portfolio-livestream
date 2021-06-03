@@ -2,14 +2,53 @@
 {% load static %}
 {% block content %}
 
+<style>
+    .project-container {
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
+</style>
+
 <div class="container">
-    <img class="project--image" src="{{project.thumbnail.url}}">
+    <div class="project-container">
 
-    <h1>{{project.title}}</h1>
-    <a class="btn btn-warning" href="{% url 'edit-project' project.id %}">Edit</a>
 
-    <hr>
-    <p>{{project.body|safe}}</p>
+        <img class="project--image" src="{{project.thumbnail.url}}">
+
+        <h1>{{project.title}}</h1>
+        <a class="btn btn-warning" href="{% url 'edit-project' project.id %}">Edit</a>
+
+        <hr>
+        <p>{{project.body|safe}}</p>
+
+        <div class="comments-container">
+            <h3>Comments ({{count}})</h3>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">{{field.label}}</label>
+                    {{field}}
+                </div>
+                {% endfor %}
+                <input class="btn btn-primary" type="submit" value="submit">
+            </form>
+            <hr>
+
+            {% for comment in comments %}
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5>{{comment.name}}</h5>
+                    <p>{{comment.body}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
