@@ -1,0 +1,86 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+
+    </figure>
+
+
+    <form style="width:300px;margin:0 auto;" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">{{field.label}}</label>
+            {{field}}
+        </div>
+        {% endfor %}
+        <input class="btn btn-primary" type="submit" value="Place your vote">
+    </form>
+
+</div>
+
+<script>
+
+    let loadData = () => {
+        fetch('http://127.0.0.1:8000/api/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                renderChart(data.backend, data.frontend, data.fullstack)
+            });
+    }
+
+    loadData()
+
+    let renderChart = (backend, frontend, fullstack) => {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Developer Types'
+            },
+            subtitle: {
+                text: 'Dennis Ivys Stream'
+            },
+
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total'
+                }
+            },
+
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Backend Dev',
+                data: [backend]
+
+            }, {
+                name: 'Frontend Dev',
+                data: [frontend]
+
+            }, {
+                name: 'FullStack Dev',
+                data: [fullstack]
+
+            }]
+        });
+    }
+    renderChart()
+</script>
+
+{% endblock content %}

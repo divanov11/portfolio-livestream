@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Project, Skill, Message, Endorsement
-from .forms import ProjectForm, MessageForm, SkillForm, EndorsementForm, CommentForm
+from .forms import ProjectForm, MessageForm, SkillForm, EndorsementForm, CommentForm, QuestionForm
 from django.contrib import messages
 
 # Create your views here.
@@ -115,3 +115,14 @@ def addEndorsement(request):
 
 def donationPage(request):
     return render(request, 'base/donation.html')
+
+
+def chartPage(request):
+    form = QuestionForm()
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        form.save()
+        messages.success(
+            request, 'Thank you your vote!')
+        return redirect('chart')
+    return render(request, 'base/chart.html', {'form': form})
