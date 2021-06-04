@@ -111,3 +111,7 @@ def addEndorsement(request):
         return redirect('home')
     context = {'form': form}
     return render(request, 'base/endorsement_form.html', context)
+
+
+def donationPage(request):
+    return render(request, 'base/donation.html')
